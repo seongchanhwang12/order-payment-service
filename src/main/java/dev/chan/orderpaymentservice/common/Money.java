@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.domain;
+package dev.chan.orderpaymentservice.common;
 
 import java.math.BigDecimal;
 
@@ -9,6 +9,10 @@ public record Money(BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Money amount cannot be negative");
         }
+    }
+
+    public static Money of(int amount) {
+        return new Money(BigDecimal.valueOf(amount));
     }
 
     public Money add(Money money) {

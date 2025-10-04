@@ -2,10 +2,18 @@ package dev.chan.orderpaymentservice.common;
 
 public class Ensure {
 
-    public static String nonBlank(String value, String message) {
+    public static String nonBlank(String value, String fieldName) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException(message);
+            throw new IllegalArgumentException(fieldName + " is Null or Blank");
         }
         return value;
+    }
+
+    public static <T> T nonNull(T obj, String fieldName) {
+        if (obj == null) {
+            throw new IllegalArgumentException(fieldName + " must not be null");
+        }
+
+        return obj;
     }
 }

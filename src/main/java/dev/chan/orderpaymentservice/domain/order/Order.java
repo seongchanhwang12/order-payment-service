@@ -1,13 +1,12 @@
-package dev.chan.orderpaymentservice.domain;
+package dev.chan.orderpaymentservice.domain.order;
 
-import dev.chan.orderpaymentservice.application.dto.OrderedProduct;
+import dev.chan.orderpaymentservice.common.Ensure;
+import dev.chan.orderpaymentservice.common.Money;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -20,17 +19,12 @@ public class Order {
     private LocalDateTime orderedAt;
     private Money totalAmount;
 
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+    private final List<OrderProduct> orderProducts = new ArrayList<>();
 
     public static Order create(Long memberId) {
         Order order = new Order();
-        order.orderedBy = memberId;
+        order.orderedBy = Ensure.nonNull(memberId, "Order.memberId");
         return order;
-    }
-
-    public void withId(Long id) {
-        this.id = id;
-        this.orderedAt = LocalDateTime.now();
     }
 
     private Money calculateTotalAmount(){
@@ -41,6 +35,11 @@ public class Order {
 
     public void addOrderProduct(OrderProduct... orderProduct) {
         List<OrderProduct> orderProducts = List.of(orderProduct);
+
+        if(orderProducts.isEmpty()) {
+            throw new OrderProductRequiredException();
+        }
+
         this.orderProducts.addAll(orderProducts);
         this.totalAmount = calculateTotalAmount();
     }

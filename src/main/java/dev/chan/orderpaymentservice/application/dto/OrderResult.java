@@ -1,13 +1,13 @@
 package dev.chan.orderpaymentservice.application.dto;
 
-import dev.chan.orderpaymentservice.domain.Money;
-import dev.chan.orderpaymentservice.domain.OrderProduct;
+import dev.chan.orderpaymentservice.common.Money;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
+ * 주문 생성 결과 DTO
+ * 
  *
  * ex)
  * {

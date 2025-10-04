@@ -3,10 +3,11 @@ package dev.chan.orderpaymentservice.application;
 import dev.chan.orderpaymentservice.application.dto.OrderResult;
 import dev.chan.orderpaymentservice.application.dto.OrderedProduct;
 import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
-import dev.chan.orderpaymentservice.domain.Order;
-import dev.chan.orderpaymentservice.domain.OrderProduct;
-import dev.chan.orderpaymentservice.domain.Product;
+import dev.chan.orderpaymentservice.common.Quantity;
 
+import dev.chan.orderpaymentservice.domain.order.Order;
+import dev.chan.orderpaymentservice.domain.order.OrderProduct;
+import dev.chan.orderpaymentservice.domain.product.Product;
 import dev.chan.orderpaymentservice.repository.OrderProductRepository;
 import dev.chan.orderpaymentservice.repository.OrderRepository;
 import dev.chan.orderpaymentservice.repository.ProductRepository;
@@ -14,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,9 +25,14 @@ public class PlaceOrderUseCase {
     private final OrderRepository orderRepository;
 
     public OrderResult handle(PlaceOrderCommand cmd) {
-        // 프로덕트 조회 -
+        Quantity orderQuantity = Quantity.of(cmd.orderQuantity());
+
+        // 프로덕트 조회
         Product product = productRepository.findById(cmd.productId())
-                .orElseThrow();
+                .orElseThrow(()-> new ProductNotFoundException(cmd.productId()));
+
+        // 재고 감산
+        product.decreaseStock(orderQuantity);
 
         // 주문 생성
         Order order = Order.create(cmd.memberId());
@@ -37,22 +42,24 @@ public class PlaceOrderUseCase {
         OrderProduct orderProduct = OrderProduct.of(
                 order,
                 product.getId(),
-                cmd.orderQuantity(),
+                orderQuantity,
                 product.getPrice(),
                 product.getName());
 
-        product.decreaseStock(cmd.orderQuantity());
-
+        // 주문 상품 저장
         orderProductRepository.save(orderProduct);
 
+        // 주문에 주문 상품 내역 추가
         order.addOrderProduct(orderProduct);
 
+        // 주문 상품 생성
         OrderedProduct orderedProduct = new OrderedProduct(
                 orderProduct.getProductId(),
                 orderProduct.getProductName(),
                 orderProduct.getProductPrice(),
-                orderProduct.getOrderQuantity());
+                orderProduct.getOrderQuantity().value());
 
+        // 주문 결과 반환
         return new OrderResult(
                 order.getId(),
                 order.getOrderedBy(),
