@@ -1,6 +1,4 @@
-package dev.chan.orderpaymentservice.repository;
-
-import dev.chan.orderpaymentservice.domain.product.Product;
+package dev.chan.orderpaymentservice.domain.product;
 
 import java.util.Optional;
 
