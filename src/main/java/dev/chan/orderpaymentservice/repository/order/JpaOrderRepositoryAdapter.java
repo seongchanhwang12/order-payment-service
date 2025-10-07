@@ -5,6 +5,7 @@ import dev.chan.orderpaymentservice.domain.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,8 +21,12 @@ public class JpaOrderRepositoryAdapter implements OrderRepository {
 
     @Override
     public Optional<Order> findById(Long orderId) {
-        Optional<Order> byId = orderRepository.findById(orderId);
-        return byId;
+        return orderRepository.findById(orderId);
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return orderRepository.findAll();
     }
 
 }

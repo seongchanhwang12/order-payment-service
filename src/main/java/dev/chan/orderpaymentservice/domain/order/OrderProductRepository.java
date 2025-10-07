@@ -9,4 +9,6 @@ public interface OrderProductRepository {
     Optional<OrderProduct> findById(Long id);
 
     List<OrderProduct> findAllByOrderId(Long aLong);
+
+    List<OrderProduct> findAll();
 }

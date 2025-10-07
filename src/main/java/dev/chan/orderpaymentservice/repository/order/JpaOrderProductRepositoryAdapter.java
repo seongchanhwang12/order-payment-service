@@ -29,4 +29,9 @@ public class JpaOrderProductRepositoryAdapter implements OrderProductRepository 
         return orderProductRepository.findAllByOrderId(orderId);
     }
 
+    @Override
+    public List<OrderProduct> findAll() {
+        return orderProductRepository.findAll();
+    }
+
 }

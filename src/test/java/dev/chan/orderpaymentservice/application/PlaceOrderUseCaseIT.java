@@ -3,6 +3,7 @@ package dev.chan.orderpaymentservice.application;
 import dev.chan.orderpaymentservice.application.dto.OrderResult;
 import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
 import dev.chan.orderpaymentservice.common.CommandMother;
+import dev.chan.orderpaymentservice.domain.InsufficientStockException;
 import dev.chan.orderpaymentservice.domain.ProductMother;
 import dev.chan.orderpaymentservice.domain.common.Money;
 import dev.chan.orderpaymentservice.domain.order.Order;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Slf4j
 @SpringBootTest
@@ -31,7 +33,7 @@ public class PlaceOrderUseCaseIT {
 
     @PersistenceContext EntityManager em;
 
-    @Autowired PlaceOrderUseCase placeOrderUseCase;
+    @Autowired PlaceOrderUseCase sut;
     @Autowired ProductRepository productRepository;
     @Autowired OrderRepository orderRepository;
     @Autowired OrderProductRepository orderProductRepository;
@@ -74,7 +76,7 @@ public class PlaceOrderUseCaseIT {
         PlaceOrderCommand cmd = CommandMother.withId(product.getId());
 
         //when
-        OrderResult orderResult = placeOrderUseCase.handle(cmd);
+        OrderResult orderResult = sut.handle(cmd);
 
         em.flush();
         em.clear();
@@ -116,9 +118,44 @@ public class PlaceOrderUseCaseIT {
 
         assertThat(orderResult.totalAmount().amount()).isEqualByComparingTo(liensTotal.amount());
 
+    }
 
+    /**
+     * 주문 생성 단건 통합테스트 (언해피 패스)
+     *
+     * 설명:
+     * - 주문 생성시 주문 수량 초과 예외에 대한 통합테스트입니다.
+     *
+     * 테스트 목적:
+     * - 주문 생성시 주문 수량이 재고보다 많을 경우 예외 발생 및 데이터 롤백을 테스트합니다.
+     *
+     * 검증 포인트:
+     * 1. 주문 생성시 주문 수량이 재고 수량을 넘으면 InsufficientStockException이 발생해야 합니다.
+     * 2. 예외 발생시 OrderRepository, OrderProductRepository 저장한 데이터가 롤백되어야 합니다.
+     * 3. 예외 발생시 Product 에서 감소한 재고가 복구 되어야합니다.
+     */
+    @Test
+    void 재고부족이면_주문실패하고_DB변경을_롤백한다() {
+        //given
+        int quantity = 1;
+        int price = 10000;
+        Product product = newProduct(price, quantity);
+        PlaceOrderCommand cmd = CommandMother.withOrderQuantity(5);
 
+        //when & then
+        assertThatThrownBy(()-> sut.handle(cmd))
+                .isInstanceOf(InsufficientStockException.class);
 
+        em.flush();
+        em.clear();
+
+        // 주문,주문제품 롤백
+        assertThat(orderRepository.findAll()).isEmpty();
+        assertThat(orderProductRepository.findAll()).isEmpty();
+
+        // 재고 감소 안됨
+        Product foundProduct = productRepository.findById(product.getId()).orElseThrow();
+        assertThat(foundProduct.getStockQuantity().value()).isEqualTo(quantity);
     }
 
 
