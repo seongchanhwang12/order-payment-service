@@ -3,7 +3,7 @@ package dev.chan.orderpaymentservice.application;
 import dev.chan.orderpaymentservice.application.dto.OrderResult;
 import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
 import dev.chan.orderpaymentservice.common.CommandMother;
-import dev.chan.orderpaymentservice.common.Money;
+import dev.chan.orderpaymentservice.domain.common.Money;
 import dev.chan.orderpaymentservice.domain.InsufficientStockException;
 import dev.chan.orderpaymentservice.domain.ProductMother;
 import dev.chan.orderpaymentservice.domain.order.Order;
@@ -73,7 +73,7 @@ class PlaceOrderUseCaseTest {
         int orderQuantity = 3;
         Money productPrice = new Money(BigDecimal.valueOf(10000));
 
-        PlaceOrderCommand cmd = CommandMother.placeOrderCommand(orderQuantity);
+        PlaceOrderCommand cmd = CommandMother.withOrderQuantity(orderQuantity);
 
         // given
 
@@ -151,7 +151,7 @@ class PlaceOrderUseCaseTest {
         int stockQuantity = 5;
         int orderQuantity = 10;
 
-        PlaceOrderCommand cmd = CommandMother.placeOrderCommand(orderQuantity);
+        PlaceOrderCommand cmd = CommandMother.withOrderQuantity(orderQuantity);
         Product product = ProductMother.withStock(stockQuantity);
 
         doReturn(Optional.of(product)).when(productRepository).findById(any());
@@ -182,7 +182,7 @@ class PlaceOrderUseCaseTest {
     void 주문수량이_음수이면_IllegalArgumentException을_던진다() {
         // given
         int orderQuantity = -1;
-        PlaceOrderCommand cmd = CommandMother.placeOrderCommand(orderQuantity);
+        PlaceOrderCommand cmd = CommandMother.withOrderQuantity(orderQuantity);
 
         // when & then
         assertThatExceptionOfType(IllegalArgumentException.class)
@@ -208,7 +208,7 @@ class PlaceOrderUseCaseTest {
      */
     @Test
     void 재고와_주문수량이_같으면_정상_처리된다() {
-        var cmd = CommandMother.placeOrderCommand(5);
+        var cmd = CommandMother.withOrderQuantity(5);
         var mac = ProductMother.withStock(5);
         when(productRepository.findById(cmd.productId())).thenReturn(Optional.of(mac));
 
