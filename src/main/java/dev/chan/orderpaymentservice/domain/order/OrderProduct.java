@@ -1,25 +1,41 @@
 package dev.chan.orderpaymentservice.domain.order;
 
 import dev.chan.orderpaymentservice.common.Ensure;
-import dev.chan.orderpaymentservice.common.Money;
-import dev.chan.orderpaymentservice.common.Quantity;
+import dev.chan.orderpaymentservice.domain.common.Money;
+import dev.chan.orderpaymentservice.domain.common.Quantity;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@Entity
+@Table(name = "ORDER_PRODUCT")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProduct {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Order order;
-    private String productName;
-    private Quantity orderQuantity;
+
     private long productId;
+
+    private String productName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @AttributeOverride(name = "value", column = @Column(name = "order_quantity"))
+    private Quantity orderQuantity;
+
+    @AttributeOverride(name = "amount", column = @Column(name = "product_price"))
     private Money productPrice;
+
+    @AttributeOverride(name = "amount", column = @Column(name = "product_total_price"))
     private Money productTotalPriceAtOrder;
 
-    @Builder
+    @Builder(access = AccessLevel.PROTECTED)
     public OrderProduct(
             Order order,
             Long productId,

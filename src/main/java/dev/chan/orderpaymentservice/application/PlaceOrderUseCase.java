@@ -3,20 +3,23 @@ package dev.chan.orderpaymentservice.application;
 import dev.chan.orderpaymentservice.application.dto.OrderResult;
 import dev.chan.orderpaymentservice.application.dto.OrderedProduct;
 import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
-import dev.chan.orderpaymentservice.common.Quantity;
+import dev.chan.orderpaymentservice.domain.common.Quantity;
 
 import dev.chan.orderpaymentservice.domain.order.Order;
 import dev.chan.orderpaymentservice.domain.order.OrderProduct;
 import dev.chan.orderpaymentservice.domain.product.Product;
-import dev.chan.orderpaymentservice.repository.OrderProductRepository;
-import dev.chan.orderpaymentservice.repository.OrderRepository;
-import dev.chan.orderpaymentservice.repository.ProductRepository;
+import dev.chan.orderpaymentservice.domain.order.OrderProductRepository;
+import dev.chan.orderpaymentservice.domain.order.OrderRepository;
+import dev.chan.orderpaymentservice.domain.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class PlaceOrderUseCase {
 
@@ -24,6 +27,7 @@ public class PlaceOrderUseCase {
     private final OrderProductRepository orderProductRepository;
     private final OrderRepository orderRepository;
 
+    @Transactional
     public OrderResult handle(PlaceOrderCommand cmd) {
         Quantity orderQuantity = Quantity.of(cmd.orderQuantity());
 
@@ -64,7 +68,7 @@ public class PlaceOrderUseCase {
                 order.getId(),
                 order.getOrderedBy(),
                 order.getOrderedAt(),
-                order.getTotalAmount(),
+                order.getTotalPrice(),
                 List.of(orderedProduct)
         );
     }

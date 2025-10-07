@@ -1,6 +1,6 @@
 package dev.chan.orderpaymentservice.application.dto;
 
-import dev.chan.orderpaymentservice.common.Money;
+import dev.chan.orderpaymentservice.domain.common.Money;
 
 import java.time.LocalDateTime;
 import java.util.List;
