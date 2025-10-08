@@ -34,4 +34,9 @@ public class JpaOrderProductRepositoryAdapter implements OrderProductRepository 
         return orderProductRepository.findAll();
     }
 
+    @Override
+    public long count() {
+        return orderProductRepository.count();
+    }
+
 }

@@ -37,10 +37,25 @@ public class CommandMother {
      * @return 설정된 orderQuantity 를 받아 PlaceOrderCommand 를 생성해 리턴합니다.
      * <br/>기본값은 다음과 같습니다.
      * <br/>long memberId - 1L
-     * <br/>long productId - 1L
-     * <br/>int orderQuantity - {설정값}
+     * <br/>long productId - {productId}
+     * <br/>int orderQuantity - {quantity}
      */
-    public static PlaceOrderCommand withOrderQuantity(int orderQuantity) {
+    public static PlaceOrderCommand withIdAndQuantity(Long id, int orderQuantity) {
         return new PlaceOrderCommand(1L, 1L, orderQuantity);
+    }
+
+    /**
+     * placeOrderCommand 생성 (orderQuantity)
+     * 테스트시 orderQuantity 를 설정하여 테스트 하기위한 생성 편의 메서드입니다.
+     *
+     * @return 설정된 orderQuantity 를 받아 PlaceOrderCommand 를 생성해 리턴합니다.
+     * <br/>기본값은 다음과 같습니다.
+     * <br/>long memberId - 1L
+     * <br/>long productId - 1L
+     * <br/>int orderQuantity - {orderQuantity}
+     */
+    public static PlaceOrderCommand withQuantity(int orderQuantity) {
+        return new PlaceOrderCommand(1L, 1L, orderQuantity);
+
     }
 }

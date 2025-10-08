@@ -9,4 +9,6 @@ public interface OrderRepository {
     Optional<Order> findById(Long orderId);
 
     List<Order> findAll();
+
+    long count();
 }

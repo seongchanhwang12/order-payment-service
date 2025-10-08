@@ -26,12 +26,15 @@ public class OrderProduct {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "order_quantity"))
     private Quantity orderQuantity;
 
+    @Embedded
     @AttributeOverride(name = "amount", column = @Column(name = "product_price"))
     private Money productPrice;
 
+    @Embedded
     @AttributeOverride(name = "amount", column = @Column(name = "product_total_price"))
     private Money productTotalPriceAtOrder;
 
