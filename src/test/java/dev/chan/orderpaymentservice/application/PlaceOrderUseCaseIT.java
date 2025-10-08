@@ -42,8 +42,8 @@ public class PlaceOrderUseCaseIT {
      * Product stub
      * @return
      */
-    private Product newProduct(int price, int quantity){
-        Product product = ProductMother.newProduct("keyboard", price, quantity);
+    private Product newProduct(int price, int stock){
+        Product product = ProductMother.newProduct("keyboard", price, stock);
         productRepository.save(product);
         return product;
     }
@@ -103,7 +103,6 @@ public class PlaceOrderUseCaseIT {
         assertThat(orderResult.orderId()).isEqualTo(foundOrder.get().getId());
 
         // 주문 상세/합계 검증
-
         OrderProduct line = foundOrderProducts.get(0);
         assertThat(line.getOrderQuantity().value()).isEqualTo(cmd.orderQuantity());
         assertThat(line.getProductId()).isEqualTo(foundProduct.getId());
@@ -125,6 +124,10 @@ public class PlaceOrderUseCaseIT {
      *
      * 설명:
      * - 주문 생성시 주문 수량 초과 예외에 대한 통합테스트입니다.
+     * - InsufficientStockException 이 사실상 Product 조회 후 바로 발생하기 때문에 order와 orderProduct에 대한 롤백 테스트가 의미 없어 보일 수 있습니다.
+     *  그럼에도 테스트를 작성한 이유는 요구사항은 계속 변경될 수 있기 때문입니다.
+     *  요구사항이 변경되어 재고의 decrease가 orderProduct등 데이터 저장 로직 이후 발생 가능성이 있다고 생각했습니다.
+     *  물론 요구사항이 변경되면 테스트도 수정 되어야 하지만, 요구사항 변경 시에도 변경 사항에 대해서만 신경 쓸 수 있도록, 발생 가능한 사이드이펙트를 사전에 차단합니다.
      *
      * 테스트 목적:
      * - 주문 생성시 주문 수량이 재고보다 많을 경우 예외 발생 및 데이터 롤백을 테스트합니다.
@@ -137,12 +140,15 @@ public class PlaceOrderUseCaseIT {
     @Test
     void 재고부족이면_주문실패하고_DB변경을_롤백한다() {
         //given
-        int quantity = 1;
+        int stock = 1;
         int price = 10000;
-        Product product = newProduct(price, quantity);
-        PlaceOrderCommand cmd = CommandMother.withOrderQuantity(5);
+        Product product = newProduct(price, stock);
+        PlaceOrderCommand cmd = CommandMother.withIdAndQuantity(product.getId(),stock + 1);
 
         //when & then
+        long beforeOrderCount = orderRepository.count();
+        long beforeOrderProductCount = orderProductRepository.count();
+
         assertThatThrownBy(()-> sut.handle(cmd))
                 .isInstanceOf(InsufficientStockException.class);
 
@@ -150,12 +156,12 @@ public class PlaceOrderUseCaseIT {
         em.clear();
 
         // 주문,주문제품 롤백
-        assertThat(orderRepository.findAll()).isEmpty();
-        assertThat(orderProductRepository.findAll()).isEmpty();
+        assertThat(orderRepository.count()).isEqualTo(beforeOrderCount);
+        assertThat(orderProductRepository.count()).isEqualTo(beforeOrderProductCount);
 
         // 재고 감소 안됨
         Product foundProduct = productRepository.findById(product.getId()).orElseThrow();
-        assertThat(foundProduct.getStockQuantity().value()).isEqualTo(quantity);
+        assertThat(foundProduct.getStockQuantity().value()).isEqualTo(stock);
     }
 
 

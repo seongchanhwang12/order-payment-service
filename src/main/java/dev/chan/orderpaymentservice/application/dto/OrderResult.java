@@ -7,8 +7,6 @@ import java.util.List;
 
 /**
  * 주문 생성 결과 DTO
- * 
- *
  * ex)
  * {
  *     orderId : 1,

@@ -15,10 +15,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Table(name = "PRODUCT")
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class Product {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
 

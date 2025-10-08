@@ -71,13 +71,13 @@ class PlaceOrderUseCaseTest {
         long memberId = 1L;
         int stockQuantity = 5;
         int orderQuantity = 3;
-        Money productPrice = new Money(BigDecimal.valueOf(10000));
 
-        PlaceOrderCommand cmd = CommandMother.withOrderQuantity(orderQuantity);
+        Money productPrice = new Money(BigDecimal.valueOf(10000));
+        Product product = ProductMother.withStock(stockQuantity);
+        PlaceOrderCommand cmd = CommandMother.withIdAndQuantity(product.getId(),orderQuantity);
 
         // given
 
-        Product product = ProductMother.withStock(stockQuantity);
         when(productRepository.findById(cmd.productId())).thenReturn(Optional.of(product));
         doNothing().when(orderRepository).save(any(Order.class));
         doNothing().when(orderProductRepository).save(any(OrderProduct.class));
@@ -151,8 +151,8 @@ class PlaceOrderUseCaseTest {
         int stockQuantity = 5;
         int orderQuantity = 10;
 
-        PlaceOrderCommand cmd = CommandMother.withOrderQuantity(orderQuantity);
         Product product = ProductMother.withStock(stockQuantity);
+        PlaceOrderCommand cmd = CommandMother.withIdAndQuantity(product.getId(),orderQuantity);
 
         doReturn(Optional.of(product)).when(productRepository).findById(any());
 
@@ -182,7 +182,7 @@ class PlaceOrderUseCaseTest {
     void 주문수량이_음수이면_IllegalArgumentException을_던진다() {
         // given
         int orderQuantity = -1;
-        PlaceOrderCommand cmd = CommandMother.withOrderQuantity(orderQuantity);
+        PlaceOrderCommand cmd = CommandMother.withQuantity(orderQuantity);
 
         // when & then
         assertThatExceptionOfType(IllegalArgumentException.class)
@@ -208,8 +208,8 @@ class PlaceOrderUseCaseTest {
      */
     @Test
     void 재고와_주문수량이_같으면_정상_처리된다() {
-        var cmd = CommandMother.withOrderQuantity(5);
-        var mac = ProductMother.withStock(5);
+        Product mac = ProductMother.withStock(5);
+        PlaceOrderCommand cmd = CommandMother.withIdAndQuantity(mac.getId(), 5);
         when(productRepository.findById(cmd.productId())).thenReturn(Optional.of(mac));
 
         assertThatCode(() -> sut.handle(cmd)).doesNotThrowAnyException();

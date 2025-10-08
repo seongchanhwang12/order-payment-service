@@ -29,4 +29,9 @@ public class JpaOrderRepositoryAdapter implements OrderRepository {
         return orderRepository.findAll();
     }
 
+    @Override
+    public long count() {
+        return orderRepository.count();
+    }
+
 }

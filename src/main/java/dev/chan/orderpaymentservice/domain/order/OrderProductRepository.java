@@ -11,4 +11,6 @@ public interface OrderProductRepository {
     List<OrderProduct> findAllByOrderId(Long aLong);
 
     List<OrderProduct> findAll();
+
+    long count();
 }
