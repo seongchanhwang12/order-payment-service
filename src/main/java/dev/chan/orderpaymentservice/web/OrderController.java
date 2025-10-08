@@ -5,6 +5,7 @@ import dev.chan.orderpaymentservice.application.dto.OrderResult;
 import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
 import dev.chan.orderpaymentservice.common.ApiResponse;
 import dev.chan.orderpaymentservice.web.dto.PlaceOrderRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class OrderController {
     private final PlaceOrderUseCase placeOrderUseCase;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<OrderResult>> placeOrder(@RequestBody PlaceOrderRequest req) {
+    public ResponseEntity<ApiResponse<OrderResult>> placeOrder(@Valid @RequestBody PlaceOrderRequest req) {
         OrderResult result = placeOrderUseCase.handle(PlaceOrderCommand.of(
                 req.getMemberId(),
                 req.getProductId(),
