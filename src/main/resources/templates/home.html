@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>홈 · 상품 목록</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}" >
+</head>
+<body>
+<header class="header">
+    <div class="header-inner">
+        <a th:href="@{/}" class="brand">
+            <div class="logo"></div>
+            <span>Order & Product</span>
+        </a>
+        <nav class="auth">
+            <a class="btn" th:href="@{/login}">로그인</a>
+            <a class="btn primary" th:href="@{/signup}">회원가입</a>
+        </nav>
+    </div>
+</header>
+
+<main class="shell">
+    <section class="hero">
+        <div>
+            <div class="title">추천 상품</div>
+            <div class="subtitle">당신을 위한 베스트 아이템을 만나보세요</div>
+        </div>
+    </section>
+
+    <form th:action="@{/}" method="get" class="toolbar" id="filterForm">
+        <input class="input" type="text" name="q" placeholder="상품명, 키워드 검색" th:value="${param.q}" />
+        <select class="select" name="category" th:value="${param.category}">
+            <option value="">전체 카테고리</option>
+            <option th:each="c : ${categories}" th:value="${c.code}" th:text="${c.name}"></option>
+        </select>
+        <select class="select" name="sort" th:value="${param.sort}">
+            <option value="POPULAR">인기순</option>
+            <option value="LATEST">최신순</option>
+            <option value="PRICE_ASC">가격 낮은순</option>
+            <option value="PRICE_DESC">가격 높은순</option>
+        </select>
+        <div style="display:flex; gap:8px; justify-content:flex-end">
+            <button class="btn" type="reset">초기화</button>
+            <button class="btn primary" type="submit">검색</button>
+        </div>
+    </form>
+
+    <section>
+        <div th:if="${products} != null and !${#lists.isEmpty(products)}" class="grid">
+            <article class="card" th:each="p : ${products}">
+                <a class="thumb" th:href="@{/products/{id}(id=${p.id})}" th:style="${p.thumbnailUrl} != null ? 'background:url(' + ${p.thumbnailUrl} + ') center/cover no-repeat' : ''"></a>
+                <div class="meta">
+                    <a th:href="@{/products/{id}(id=${p.id})}" class="name" th:text="${p.name}"></a>
+                    <div class="desc" th:text="${p.shortDescription}"></div>
+                    <div class="price" th:text="${#numbers.formatInteger(p.price.amount,0,'COMMA')} + '원'"></div>
+                </div>
+                <div class="card-footer">
+                    <div class="qty">
+                        <span>수량</span>
+                        <input type="number" min="1" step="1" value="1" th:attr="id=${'qty-' + p.id}" />
+                    </div>
+                    <form th:action="@{/cart}" method="post">
+                        <input type="hidden" name="productId" th:value="${p.id}" />
+                        <input type="hidden" name="quantity" value="1" th:attr="id=${'qtyInput-' + p.id}" />
+                        <button class="btn primary" type="submit" th:onclick="'document.getElementById(\'qtyInput-' + '[[${p.id}]]' + '\').value=document.getElementById(\'qty-' + '[[${p.id}]]' + '\').value'">장바구니</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+        <div class="empty" th:if="${products} == null or ${#lists.isEmpty(products)}">상품이 없습니다. 새로운 상품을 등록해보세요.</div>
+    </section>
+</main>
+</body>
+</html>

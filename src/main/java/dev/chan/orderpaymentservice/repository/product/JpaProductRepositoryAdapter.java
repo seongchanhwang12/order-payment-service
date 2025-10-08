@@ -5,6 +5,7 @@ import dev.chan.orderpaymentservice.domain.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,5 +22,10 @@ public class JpaProductRepositoryAdapter implements ProductRepository {
     @Override
     public void save(Product product) {
         jpaProductRepository.save(product);
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return jpaProductRepository.findAll();
     }
 }
