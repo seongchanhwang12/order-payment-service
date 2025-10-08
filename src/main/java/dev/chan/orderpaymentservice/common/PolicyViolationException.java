@@ -7,7 +7,7 @@ import lombok.Getter;
  * 도메인 예외 추가시 반드시 이 클래스를 상속해주세요.
  */
 @Getter
-public class PolicyViolationException extends RuntimeException{
+public class PolicyViolationException extends RuntimeException {
     private final ErrorCode errorCode;
     private final String message;
 

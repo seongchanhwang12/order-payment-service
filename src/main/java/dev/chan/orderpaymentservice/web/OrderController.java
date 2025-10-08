@@ -20,7 +20,7 @@ public class OrderController {
     private final PlaceOrderUseCase placeOrderUseCase;
 
     @PostMapping
-    public ResponseEntity<?> placeOrder(@RequestBody PlaceOrderRequest req) {
+    public ResponseEntity<ApiResponse<OrderResult>> placeOrder(@RequestBody PlaceOrderRequest req) {
         OrderResult result = placeOrderUseCase.handle(PlaceOrderCommand.of(
                 req.getMemberId(),
                 req.getProductId(),
