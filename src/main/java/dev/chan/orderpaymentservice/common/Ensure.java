@@ -1,5 +1,7 @@
 package dev.chan.orderpaymentservice.common;
 
+import java.util.List;
+
 public class Ensure {
 
     public static String nonBlank(String value, String fieldName) {
@@ -15,5 +17,12 @@ public class Ensure {
         }
 
         return obj;
+    }
+
+    public static <T>  List<T> notEmpty(List<T> collection, String fieldName) {
+        if (collection == null || collection.isEmpty()) {
+            throw new IllegalArgumentException(fieldName + " must not be null or empty");
+        }
+        return collection;
     }
 }
