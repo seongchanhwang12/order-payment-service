@@ -1,6 +1,4 @@
-package dev.chan.orderpaymentservice.domain;
-
-import dev.chan.orderpaymentservice.domain.order.Order;
+package dev.chan.orderpaymentservice.domain.order;
 
 /**
  * Order 스텁 팩토리

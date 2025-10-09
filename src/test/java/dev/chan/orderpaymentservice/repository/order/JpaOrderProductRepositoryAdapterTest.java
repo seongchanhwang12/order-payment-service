@@ -1,9 +1,7 @@
 package dev.chan.orderpaymentservice.repository.order;
 
-import dev.chan.orderpaymentservice.domain.OrderMother;
-import dev.chan.orderpaymentservice.domain.OrderProductMother;
-import dev.chan.orderpaymentservice.domain.common.Money;
-import dev.chan.orderpaymentservice.domain.common.Quantity;
+import dev.chan.orderpaymentservice.domain.order.OrderMother;
+import dev.chan.orderpaymentservice.domain.order.OrderProductMother;
 import dev.chan.orderpaymentservice.domain.order.Order;
 import dev.chan.orderpaymentservice.domain.order.OrderProduct;
 import dev.chan.orderpaymentservice.domain.order.OrderProductRepository;

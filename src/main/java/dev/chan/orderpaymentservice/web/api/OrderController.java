@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.web;
+package dev.chan.orderpaymentservice.web.api;
 
 import dev.chan.orderpaymentservice.application.PlaceOrderUseCase;
 import dev.chan.orderpaymentservice.application.dto.OrderResult;

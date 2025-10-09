@@ -2,10 +2,10 @@ package dev.chan.orderpaymentservice.application;
 
 import dev.chan.orderpaymentservice.application.dto.OrderResult;
 import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
-import dev.chan.orderpaymentservice.common.CommandMother;
+import dev.chan.orderpaymentservice.common.PlaceOrderCommandMother;
 import dev.chan.orderpaymentservice.domain.common.Money;
-import dev.chan.orderpaymentservice.domain.InsufficientStockException;
-import dev.chan.orderpaymentservice.domain.ProductMother;
+import dev.chan.orderpaymentservice.domain.product.InsufficientStockException;
+import dev.chan.orderpaymentservice.domain.product.ProductMother;
 import dev.chan.orderpaymentservice.domain.order.Order;
 import dev.chan.orderpaymentservice.domain.order.OrderProduct;
 import dev.chan.orderpaymentservice.domain.product.Product;
@@ -74,7 +74,7 @@ class PlaceOrderUseCaseTest {
 
         Money productPrice = new Money(BigDecimal.valueOf(10000));
         Product product = ProductMother.withStock(stockQuantity);
-        PlaceOrderCommand cmd = CommandMother.withIdAndQuantity(product.getId(),orderQuantity);
+        PlaceOrderCommand cmd = PlaceOrderCommandMother.withIdAndQuantity(product.getId(),orderQuantity);
 
         // given
 
@@ -120,7 +120,7 @@ class PlaceOrderUseCaseTest {
     @Test
     void 커맨드의productId로_조회시_Product가_없으면_ProductNotFoundException을_던진다() {
         //given
-        PlaceOrderCommand cmd = CommandMother.placeOrderCommand();
+        PlaceOrderCommand cmd = PlaceOrderCommandMother.placeOrderCommand();
 
         //when & then
         assertThatExceptionOfType(ProductNotFoundException.class)
@@ -152,7 +152,7 @@ class PlaceOrderUseCaseTest {
         int orderQuantity = 10;
 
         Product product = ProductMother.withStock(stockQuantity);
-        PlaceOrderCommand cmd = CommandMother.withIdAndQuantity(product.getId(),orderQuantity);
+        PlaceOrderCommand cmd = PlaceOrderCommandMother.withIdAndQuantity(product.getId(),orderQuantity);
 
         doReturn(Optional.of(product)).when(productRepository).findById(any());
 
@@ -182,7 +182,7 @@ class PlaceOrderUseCaseTest {
     void 주문수량이_음수이면_IllegalArgumentException을_던진다() {
         // given
         int orderQuantity = -1;
-        PlaceOrderCommand cmd = CommandMother.withQuantity(orderQuantity);
+        PlaceOrderCommand cmd = PlaceOrderCommandMother.withQuantity(orderQuantity);
 
         // when & then
         assertThatExceptionOfType(IllegalArgumentException.class)
@@ -209,7 +209,7 @@ class PlaceOrderUseCaseTest {
     @Test
     void 재고와_주문수량이_같으면_정상_처리된다() {
         Product mac = ProductMother.withStock(5);
-        PlaceOrderCommand cmd = CommandMother.withIdAndQuantity(mac.getId(), 5);
+        PlaceOrderCommand cmd = PlaceOrderCommandMother.withIdAndQuantity(mac.getId(), 5);
         when(productRepository.findById(cmd.productId())).thenReturn(Optional.of(mac));
 
         assertThatCode(() -> sut.handle(cmd)).doesNotThrowAnyException();

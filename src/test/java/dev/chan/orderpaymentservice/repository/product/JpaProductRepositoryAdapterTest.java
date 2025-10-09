@@ -1,6 +1,6 @@
 package dev.chan.orderpaymentservice.repository.product;
 
-import dev.chan.orderpaymentservice.domain.ProductMother;
+import dev.chan.orderpaymentservice.domain.product.ProductMother;
 import dev.chan.orderpaymentservice.domain.product.Product;
 import dev.chan.orderpaymentservice.domain.product.ProductRepository;
 import org.junit.jupiter.api.Test;

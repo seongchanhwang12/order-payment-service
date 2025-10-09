@@ -3,7 +3,6 @@ package dev.chan.orderpaymentservice.domain.product;
 import dev.chan.orderpaymentservice.common.Ensure;
 import dev.chan.orderpaymentservice.domain.common.Money;
 import dev.chan.orderpaymentservice.domain.common.Quantity;
-import dev.chan.orderpaymentservice.domain.InsufficientStockException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

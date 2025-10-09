@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.domain;
+package dev.chan.orderpaymentservice.domain.member;
 
 import dev.chan.orderpaymentservice.common.ErrorCode;
 import lombok.Getter;
@@ -7,13 +7,12 @@ import lombok.experimental.Accessors;
 import org.springframework.http.HttpStatus;
 
 @Getter
-@Accessors(fluent = true)
 @RequiredArgsConstructor
-public enum ProductError implements ErrorCode {
-    NOT_FOUND(HttpStatus.NOT_FOUND, "PRD-NOT_FOUND","product.error.notfound"),
-    INSUFFICIENT_STOCK(HttpStatus.BAD_REQUEST,"PRD-INSUFFICIENT_STOCK" , "product.error.insufficient_stock" ),
+@Accessors(fluent = true)
+public enum MemberError implements ErrorCode {
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "MEM-INVALID_PASSWORD","member.error.invalid_password"),
+    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "MEM-DUPLICATE_EMAIL" ,"member.duplicate_email" ),
     ;
-
     private final HttpStatus status;
     private final String code;
     private final String messageKey;

@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.web;
+package dev.chan.orderpaymentservice.web.view;
 
 import dev.chan.orderpaymentservice.application.ProductQueryService;
 import dev.chan.orderpaymentservice.application.dto.ProductView;
@@ -17,7 +17,10 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model){
-        List<ProductView> views = productQueryService.listAll().stream().map(ProductView::from).toList();
+        List<ProductView> views = productQueryService.listAll().stream()
+                .map(ProductView::from)
+                .toList();
+
         model.addAttribute("products", views);
         return "home";
     }
