@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>로그인</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<main class="auth-wrap">
+    <section class="card">
+        <header class="card__header">
+            <a class="brand" th:href="@{/}">
+                <img class="brand__logo" th:src="@{/images/logo.svg}" alt="Brand" />
+                <span class="brand__name">OrderPay</span>
+            </a>
+            <h1 class="title">로그인</h1>
+            <p class="subtitle">계정에 로그인하고 주문 서비스를 이용해 보세요.</p>
+        </header>
+
+        <!-- 플래시 메시지 (회원가입 성공 등) -->
+        <div class="alert alert--success" th:if="${signupSuccess}">
+            회원가입이 완료되었습니다. 로그인해 주세요.
+        </div>
+        <div class="alert alert--error" th:if="${param.error}">
+            이메일 또는 비밀번호가 올바르지 않습니다.
+        </div>
+        <div class="alert alert--info" th:if="${param.logout}">
+            성공적으로 로그아웃되었습니다.
+        </div>
+
+        <form class="form"
+              th:action="@{/login}" method="post"
+              th:object="${loginForm}">
+            <!-- CSRF: th:action + POST면 자동 삽입되지만, 수동으로 넣어도 됩니다. -->
+            <input type="hidden" th:if="${_csrf != null}"
+                   th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <div class="field">
+                <label for="email">이메일</label>
+                <input id="email" class="input" type="email" th:field="*{email}"
+                       placeholder="you@example.com" autocomplete="username" required />
+                <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">이메일 오류</p>
+            </div>
+
+            <div class="field">
+                <label for="password">비밀번호</label>
+                <div class="input-group">
+                    <input id="password" class="input" type="password" th:field="*{password}"
+                           placeholder="••••••••" autocomplete="current-password" required />
+                    <button class="input-ghost" type="button" aria-label="비밀번호 표시" onclick="togglePw()">보기</button>
+                </div>
+                <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">비밀번호 오류</p>
+            </div>
+
+            <div class="row-between">
+                <label class="checkbox">
+                    <input type="checkbox" name="remember-me" />
+                    <span>로그인 상태 유지</span>
+                </label>
+                <a class="link" th:href="@{/forgot-password}">비밀번호를 잊으셨나요?</a>
+            </div>
+
+            <button class="btn btn--primary" type="submit">로그인</button>
+
+            <p class="hint">
+                아직 계정이 없으신가요?
+                <a class="link" th:href="@{/signup}">회원가입</a>
+            </p>
+        </form>
+    </section>
+
+    <!-- 우측 프로모 패널(큰 화면에서 노출) -->
+    <aside class="promo">
+        <div class="promo__badge">오늘의 혜택</div>
+        <h2 class="promo__title">첫 주문 10% 할인</h2>
+        <p class="promo__desc">지금 가입하고 로그인하면 웰컴 쿠폰이 자동 지급됩니다.</p>
+        <img class="promo__img" th:src="@{/images/illustration-shopping.svg}" alt="Shopping Illustration" />
+    </aside>
+</main>
+
+<script>
+    function togglePw() {
+        const el = document.getElementById('password');
+        el.type = el.type === 'password' ? 'text' : 'password';
+    }
+</script>
+</body>
+</html>
