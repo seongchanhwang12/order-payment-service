@@ -1,7 +1,7 @@
 package dev.chan.orderpaymentservice.application;
 
 import dev.chan.orderpaymentservice.common.PolicyViolationException;
-import dev.chan.orderpaymentservice.domain.ProductError;
+import dev.chan.orderpaymentservice.domain.product.ProductError;
 
 public class ProductNotFoundException extends PolicyViolationException {
 

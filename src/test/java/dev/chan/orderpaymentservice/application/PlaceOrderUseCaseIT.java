@@ -2,8 +2,8 @@ package dev.chan.orderpaymentservice.application;
 
 import dev.chan.orderpaymentservice.application.dto.OrderResult;
 import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
-import dev.chan.orderpaymentservice.common.CommandMother;
-import dev.chan.orderpaymentservice.domain.InsufficientStockException;
+import dev.chan.orderpaymentservice.common.PlaceOrderCommandMother;
+import dev.chan.orderpaymentservice.domain.product.InsufficientStockException;
 import dev.chan.orderpaymentservice.domain.ProductMother;
 import dev.chan.orderpaymentservice.domain.common.Money;
 import dev.chan.orderpaymentservice.domain.order.Order;
@@ -73,7 +73,7 @@ public class PlaceOrderUseCaseIT {
         int price = 15000;
         int quantity = 10;
         Product product = newProduct(price, quantity);
-        PlaceOrderCommand cmd = CommandMother.withId(product.getId());
+        PlaceOrderCommand cmd = PlaceOrderCommandMother.withId(product.getId());
 
         //when
         OrderResult orderResult = sut.handle(cmd);
@@ -143,7 +143,7 @@ public class PlaceOrderUseCaseIT {
         int stock = 1;
         int price = 10000;
         Product product = newProduct(price, stock);
-        PlaceOrderCommand cmd = CommandMother.withIdAndQuantity(product.getId(),stock + 1);
+        PlaceOrderCommand cmd = PlaceOrderCommandMother.withIdAndQuantity(product.getId(),stock + 1);
 
         //when & then
         long beforeOrderCount = orderRepository.count();

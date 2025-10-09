@@ -2,7 +2,7 @@ package dev.chan.orderpaymentservice.common;
 
 import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
 
-public class CommandMother {
+public class PlaceOrderCommandMother {
 
     /**
      * 기본 값을 가진 placeOrderCommand 생성
@@ -56,6 +56,9 @@ public class CommandMother {
      */
     public static PlaceOrderCommand withQuantity(int orderQuantity) {
         return new PlaceOrderCommand(1L, 1L, orderQuantity);
-
     }
+
+
+
+
 }
