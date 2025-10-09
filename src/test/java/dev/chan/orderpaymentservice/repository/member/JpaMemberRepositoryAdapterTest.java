@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JpaMemberRepositoryAdapterTest {
 
     @Autowired
-    MemberRepository memberRepository;
+    MemberRepository sut;
 
     @Test
     void 올바른회원데이터가주어지면_회원이_정상적으로저장되고_id가생성된다() {
@@ -26,17 +26,32 @@ class JpaMemberRepositoryAdapterTest {
         String email = "email";
         String phone = "01011111111";
 
-        Member member = Member.signUp(email,password,password,phone,name);
+        Member member = Member.signUp(email,password,phone,name);
 
         //when
-        memberRepository.save(member);
-        Optional<Member> foundMember = memberRepository.findById(member.getId());
+        sut.save(member);
+        Optional<Member> foundMember = sut.findById(member.getId());
 
         //then
         assertThat(foundMember).isPresent();
         assertThat(foundMember.get()).isEqualTo(member);
         assertThat(foundMember.get().getName()).isEqualTo(name);
         assertThat(foundMember.get().getPassword()).isEqualTo(password);
+    }
+
+    @Test
+    void existsByEmail호출시_동일한_이메일이_존재하면_true를리턴한다() {
+        //given
+        String emailId = "email@test.com";
+        Member member = Member.signUp(emailId, "password", "01011112222", "kim");
+        sut.save(member);
+
+        //when
+        boolean isExists = sut.existsByEmail(emailId);
+
+        //then
+        assertThat(isExists).isTrue();
+
     }
 
 

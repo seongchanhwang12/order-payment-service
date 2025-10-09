@@ -22,4 +22,14 @@ public class JpaMemberRepositoryAdapter implements MemberRepository {
     public Optional<Member> findById(long id) {
         return jpaMemberRepository.findById(id);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return jpaMemberRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return jpaMemberRepository.findByEmail(email);
+    }
 }

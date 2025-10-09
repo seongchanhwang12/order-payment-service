@@ -1,14 +1,11 @@
 package dev.chan.orderpaymentservice.domain.member;
 
 import dev.chan.orderpaymentservice.common.Ensure;
-import dev.chan.orderpaymentservice.common.PolicyViolationException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Objects;
 
 @Getter
 @Entity
@@ -18,6 +15,8 @@ public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
     private String name;
@@ -31,12 +30,7 @@ public class Member {
         this.phone = Ensure.nonBlank(phone, "Member.phone");
     }
 
-    public static Member signUp(String email, String password, String passwordConfirm, String phone, String name) {
-        if(!Objects.equals(password, passwordConfirm)) {
-            throw new PolicyViolationException(MemberError.INVALID_PASSWORD
-                    , "invalid password. password is [" + password +  "] but, passwordConfirm = [" + passwordConfirm + "]");
-        }
-
+    public static Member signUp(String email, String password, String phone, String name) {
         return Member.builder()
                 .email(email)
                 .password(password)
@@ -46,4 +40,12 @@ public class Member {
     }
 
 
+    public static Member of(String email, String password, String name, String phone) {
+        return Member.builder()
+                .email(email)
+                .password(password)
+                .name(name)
+                .phone(phone)
+                .build();
+    }
 }

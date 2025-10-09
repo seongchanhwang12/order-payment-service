@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Accessors(fluent = true)
 public enum MemberError implements ErrorCode {
-    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "MEM-INVALID_PASSWORD","member.error.invalid_password")
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "MEM-INVALID_PASSWORD","member.error.invalid_password"),
+    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "MEM-DUPLICATE_EMAIL" ,"member.duplicate_email" ),
     ;
     private final HttpStatus status;
     private final String code;

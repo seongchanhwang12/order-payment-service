@@ -1,6 +1,5 @@
 package dev.chan.orderpaymentservice.application;
 
-import dev.chan.orderpaymentservice.application.dto.SignUpCommand;
 import dev.chan.orderpaymentservice.common.SignUpCommandMother;
 import dev.chan.orderpaymentservice.domain.member.Member;
 import dev.chan.orderpaymentservice.domain.member.MemberRepository;
@@ -11,7 +10,6 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -58,7 +56,7 @@ class SignUpUseCaseTest {
         doNothing().when(memberRepository).save(any(Member.class));
 
         //when
-        sut.handle(SignUpCommandMother.of(email, password, password, phone, name));
+        sut.handle(SignUpCommandMother.of(email, password, phone, name));
 
         //then
         verify(memberRepository).save(memberCaptor.capture());
@@ -67,6 +65,7 @@ class SignUpUseCaseTest {
         assertThat(saveMember.getPassword()).isEqualTo(password);
         assertThat(saveMember.getName()).isEqualTo(name);
     }
+
 
 
 

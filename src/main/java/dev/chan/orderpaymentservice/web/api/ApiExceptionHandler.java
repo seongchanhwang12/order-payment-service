@@ -1,17 +1,17 @@
-package dev.chan.orderpaymentservice.web.common;
+package dev.chan.orderpaymentservice.web.api;
 
 import dev.chan.orderpaymentservice.common.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
 
-@RestControllerAdvice
-public class GlobalExceptionHandler {
+@RestControllerAdvice(annotations = RestController.class)
+public class ApiExceptionHandler {
 
 
     /**
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
      * @param e - PolicyViolationException.class
      * @return ResponseEntity
      */
-    @ExceptionHandler(PolicyViolationException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(PolicyViolationException.class)
     public ResponseEntity<ApiResponse<Void>> handle(PolicyViolationException e) {
         ErrorCode errorCode = e.getErrorCode();
 
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
      * @param e - MethodArgumentNotValidException.class
      * @return ApiResponse<ApiError>
      */
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Void>> handle(MethodArgumentNotValidException e){
         List<ErrorDetail> details = e.getBindingResult().getAllErrors().stream().map(err -> {
             if (err instanceof FieldError fieldError) {

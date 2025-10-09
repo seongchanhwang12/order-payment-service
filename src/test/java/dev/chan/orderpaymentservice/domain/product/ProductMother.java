@@ -1,8 +1,7 @@
-package dev.chan.orderpaymentservice.domain;
+package dev.chan.orderpaymentservice.domain.product;
 
 import dev.chan.orderpaymentservice.domain.common.Money;
 import dev.chan.orderpaymentservice.domain.common.Quantity;
-import dev.chan.orderpaymentservice.domain.product.Product;
 
 /**
  * Product 스텁 팩토리

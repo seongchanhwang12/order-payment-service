@@ -19,9 +19,6 @@
             <div class="col">
                 <div class="title">계정 만들기</div>
                 <div class="subtitle">아래 정보를 입력해 주세요</div>
-
-
-
                 <form th:action="@{/signup}" th:object="${signUpForm}" method="post" novalidate>
                     <!-- 전역 에러 -->
                     <div class="form-error" th:if="${#fields.hasGlobalErrors()}">

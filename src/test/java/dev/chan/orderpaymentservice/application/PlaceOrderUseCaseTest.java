@@ -5,7 +5,7 @@ import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
 import dev.chan.orderpaymentservice.common.PlaceOrderCommandMother;
 import dev.chan.orderpaymentservice.domain.common.Money;
 import dev.chan.orderpaymentservice.domain.product.InsufficientStockException;
-import dev.chan.orderpaymentservice.domain.ProductMother;
+import dev.chan.orderpaymentservice.domain.product.ProductMother;
 import dev.chan.orderpaymentservice.domain.order.Order;
 import dev.chan.orderpaymentservice.domain.order.OrderProduct;
 import dev.chan.orderpaymentservice.domain.product.Product;
