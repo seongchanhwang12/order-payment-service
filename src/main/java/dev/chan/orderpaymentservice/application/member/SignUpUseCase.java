@@ -1,6 +1,6 @@
-package dev.chan.orderpaymentservice.application;
+package dev.chan.orderpaymentservice.application.member;
 
-import dev.chan.orderpaymentservice.application.dto.SignUpCommand;
+import dev.chan.orderpaymentservice.application.member.dto.SignUpCommand;
 import dev.chan.orderpaymentservice.domain.member.DuplicateMemberException;
 import dev.chan.orderpaymentservice.domain.member.Member;
 import dev.chan.orderpaymentservice.domain.member.MemberError;

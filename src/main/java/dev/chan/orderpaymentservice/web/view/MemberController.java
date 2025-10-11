@@ -1,7 +1,7 @@
 package dev.chan.orderpaymentservice.web.view;
 
-import dev.chan.orderpaymentservice.application.SignUpUseCase;
-import dev.chan.orderpaymentservice.application.dto.SignUpCommand;
+import dev.chan.orderpaymentservice.application.member.SignUpUseCase;
+import dev.chan.orderpaymentservice.application.member.dto.SignUpCommand;
 import dev.chan.orderpaymentservice.web.dto.SignUpForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

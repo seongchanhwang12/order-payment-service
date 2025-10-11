@@ -1,8 +1,9 @@
-package dev.chan.orderpaymentservice.application;
+package dev.chan.orderpaymentservice.application.order;
 
-import dev.chan.orderpaymentservice.application.dto.OrderResult;
-import dev.chan.orderpaymentservice.application.dto.OrderedProduct;
-import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
+import dev.chan.orderpaymentservice.application.order.dto.OrderResult;
+import dev.chan.orderpaymentservice.application.order.dto.OrderedProduct;
+import dev.chan.orderpaymentservice.application.order.dto.PlaceOrderCommand;
+import dev.chan.orderpaymentservice.application.product.ProductNotFoundException;
 import dev.chan.orderpaymentservice.domain.common.Quantity;
 
 import dev.chan.orderpaymentservice.domain.order.Order;

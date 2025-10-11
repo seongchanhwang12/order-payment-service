@@ -1,5 +1,6 @@
 package dev.chan.orderpaymentservice.application;
 
+import dev.chan.orderpaymentservice.application.member.SignUpUseCase;
 import dev.chan.orderpaymentservice.common.SignUpCommandMother;
 import dev.chan.orderpaymentservice.domain.member.Member;
 import dev.chan.orderpaymentservice.domain.member.MemberRepository;

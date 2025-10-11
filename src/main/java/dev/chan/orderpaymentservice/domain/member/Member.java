@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Getter
 @Entity
 @Table(name = "MEMBER")
@@ -47,5 +49,10 @@ public class Member {
                 .name(name)
                 .phone(phone)
                 .build();
+    }
+
+    public boolean isMatch(String password){
+
+        return Objects.equals(this.password, password);
     }
 }

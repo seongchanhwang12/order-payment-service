@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.application.dto;
+package dev.chan.orderpaymentservice.application.order.dto;
 
 import dev.chan.orderpaymentservice.domain.common.Money;
 

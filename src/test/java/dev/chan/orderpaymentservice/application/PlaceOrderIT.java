@@ -1,7 +1,8 @@
 package dev.chan.orderpaymentservice.application;
 
-import dev.chan.orderpaymentservice.application.dto.OrderResult;
-import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
+import dev.chan.orderpaymentservice.application.order.dto.OrderResult;
+import dev.chan.orderpaymentservice.application.order.dto.PlaceOrderCommand;
+import dev.chan.orderpaymentservice.application.order.PlaceOrderUseCase;
 import dev.chan.orderpaymentservice.common.PlaceOrderCommandMother;
 import dev.chan.orderpaymentservice.domain.product.InsufficientStockException;
 import dev.chan.orderpaymentservice.domain.product.ProductMother;
@@ -29,11 +30,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Slf4j
 @SpringBootTest
 @Transactional
-public class PlaceOrderUseCaseIT {
+public class PlaceOrderIT {
 
     @PersistenceContext EntityManager em;
 
-    @Autowired PlaceOrderUseCase sut;
+    @Autowired
+    PlaceOrderUseCase sut;
     @Autowired ProductRepository productRepository;
     @Autowired OrderRepository orderRepository;
     @Autowired OrderProductRepository orderProductRepository;
