@@ -1,6 +1,7 @@
 package dev.chan.orderpaymentservice.application;
 
-import dev.chan.orderpaymentservice.application.dto.SignUpCommand;
+import dev.chan.orderpaymentservice.application.member.dto.SignUpCommand;
+import dev.chan.orderpaymentservice.application.member.SignUpUseCase;
 import dev.chan.orderpaymentservice.common.SignUpCommandMother;
 import dev.chan.orderpaymentservice.domain.member.*;
 import org.junit.jupiter.api.Test;

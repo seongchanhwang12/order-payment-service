@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.application.dto;
+package dev.chan.orderpaymentservice.application.product.dto;
 
 import dev.chan.orderpaymentservice.domain.product.Product;
 

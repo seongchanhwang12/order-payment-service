@@ -1,6 +1,6 @@
 package dev.chan.orderpaymentservice.common;
 
-import dev.chan.orderpaymentservice.application.dto.PlaceOrderCommand;
+import dev.chan.orderpaymentservice.application.order.dto.PlaceOrderCommand;
 
 public class PlaceOrderCommandMother {
 

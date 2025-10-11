@@ -1,6 +1,6 @@
 package dev.chan.orderpaymentservice.common;
 
-import dev.chan.orderpaymentservice.application.dto.SignUpCommand;
+import dev.chan.orderpaymentservice.application.member.dto.SignUpCommand;
 
 public class SignUpCommandMother {
     private final static String EMAIL ="default@test.email";

@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.application.dto;
+package dev.chan.orderpaymentservice.application.member.dto;
 
 
 public record SignUpCommand(
