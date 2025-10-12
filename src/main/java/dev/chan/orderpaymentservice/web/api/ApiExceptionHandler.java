@@ -36,8 +36,31 @@ public class ApiExceptionHandler {
 
     }
 
+    /**
+     * UnauthorizedException 핸들러
+     * 인증이 필요한 사용자 또는 자원 접근 실패시 발생하는 UnauthorizedException 예외를 처리합니다.
+     *
+     * @param e
+     * @return
+     */
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ApiResponse<Void>> handle(UnauthorizedException e) {
+        ErrorCode errorCode = e.getErrorCode();
+
+        ApiError apiError = new ApiError(errorCode.status().value(), errorCode.code(), e.getMessage());
+        return ResponseEntity.status(errorCode.status())
+                .body(ApiResponse.failure(apiError));
+    }
+
+    /**
+     * NotFoundException 핸들러
+     * 요청한 리소스를 찾을 수 없을시 발생하는 NotFoundException을 처리합니다.
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handle(NotFoundException e) {
         ErrorCode errorCode = e.getErrorCode();
 
         ApiError apiError = new ApiError(errorCode.status().value(), errorCode.code(), e.getMessage());
