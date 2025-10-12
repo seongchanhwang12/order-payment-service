@@ -19,7 +19,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "ORDERS")
 public class Order {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private Long orderedBy;
 
     @CurrentTimestamp

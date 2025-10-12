@@ -19,7 +19,7 @@ public class LoginUseCase {
     public LoginResult handle(LoginCommand cmd){
         Member loginMember = memberRepository.findByEmail(cmd.email())
                 .filter(m -> m.isMatch(cmd.password()))
-                .orElseThrow(() -> new PolicyViolationException(MemberError.AUTHENTICATION_FAIL,"Invalid credentials"));
+                .orElseThrow(() -> new PolicyViolationException(MemberError.PASSWORD_MISMATCH,"Invalid credentials"));
 
         return LoginResult.of(loginMember);
     }

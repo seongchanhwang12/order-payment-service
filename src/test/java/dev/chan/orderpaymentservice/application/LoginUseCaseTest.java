@@ -93,7 +93,7 @@ class LoginUseCaseTest {
         //when & then
         assertThatThrownBy(() -> sut.handle(cmd))
                 .isInstanceOf(PolicyViolationException.class)
-                .extracting("errorCode").isEqualTo(MemberError.AUTHENTICATION_FAIL);
+                .extracting("errorCode").isEqualTo(MemberError.PASSWORD_MISMATCH);
 
         verify(memberRepository, times(1)).findByEmail(email);
         verifyNoMoreInteractions(memberRepository);
@@ -127,7 +127,7 @@ class LoginUseCaseTest {
         //when & then
         assertThatThrownBy(()-> sut.handle(cmd)).isInstanceOf(PolicyViolationException.class)
                 .extracting("errorCode")
-                .isEqualTo(MemberError.AUTHENTICATION_FAIL);
+                .isEqualTo(MemberError.PASSWORD_MISMATCH);
 
         verify(memberRepository, times(1)).findByEmail(email);
         verifyNoMoreInteractions(memberRepository);
