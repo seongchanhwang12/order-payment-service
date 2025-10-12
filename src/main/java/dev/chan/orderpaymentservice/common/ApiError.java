@@ -20,7 +20,7 @@ public class ApiError {
         this.status = status;
         this.code = code;
         this.message = message;
-        this.details = Ensure.notEmpty(List.copyOf(details), "ApiError.details") ;
+        this.details = details;
 
     }
 

@@ -14,4 +14,9 @@ public class MemberMother {
     public static Member withEmailAndPassword(String email, String password) {
         return Member.of(email, password, NAME, PHONE);
     }
+
+    public static Member newMember() {
+        return Member.of(EMAIL,PASSWORD,NAME,PHONE);
+
+    }
 }

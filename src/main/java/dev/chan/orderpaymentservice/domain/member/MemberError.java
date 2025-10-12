@@ -10,11 +10,13 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Accessors(fluent = true)
 public enum MemberError implements ErrorCode {
-    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "MEM-INVALID_PASSWORD","member.error.invalid_password"),
-    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "MEM-DUPLICATE_EMAIL" ,"member.duplicate_email" ),
-    INVALID_EMAIL(HttpStatus.BAD_REQUEST, "MEM-INVALID_EMAIL" ,"member.invalid_email"),
-    AUTHENTICATION_FAIL(HttpStatus.UNAUTHORIZED, "MEM-AUTHENTICATION_FAIL" ,"member.authentication_fail"),
+    INVALID_SESSION(HttpStatus.UNAUTHORIZED, "MEM-INVALID_SESSION" ,"member.error.invalid_session"),
+    PASSWORD_MISMATCH(HttpStatus.UNAUTHORIZED,"MEM-PASSWORD_MISMATCH" ,"member.error.invalid_credentials" ),
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "MEM-UNAUTHORIZED" ,"member.error.unauthorized" ),
+    DUPLICATE_EMAIL(HttpStatus.BAD_REQUEST, "MEM-DUPLICATE_EMAIL" ,"member.error.duplicate_email" ),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEM-NOT_FOUND", "member.error.not_found" ),
     ;
+
     private final HttpStatus status;
     private final String code;
     private final String messageKey;

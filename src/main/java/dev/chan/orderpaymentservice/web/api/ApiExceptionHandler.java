@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,7 +23,7 @@ public class ApiExceptionHandler {
      * @param e - PolicyViolationException.class
      * @return ResponseEntity
      */
-    @org.springframework.web.bind.annotation.ExceptionHandler(PolicyViolationException.class)
+    @ExceptionHandler(PolicyViolationException.class)
     public ResponseEntity<ApiResponse<Void>> handle(PolicyViolationException e) {
         ErrorCode errorCode = e.getErrorCode();
 
@@ -35,12 +36,21 @@ public class ApiExceptionHandler {
 
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ApiResponse<Void>> handle(UnauthorizedException e) {
+        ErrorCode errorCode = e.getErrorCode();
+
+        ApiError apiError = new ApiError(errorCode.status().value(), errorCode.code(), e.getMessage());
+        return ResponseEntity.status(errorCode.status())
+                .body(ApiResponse.failure(apiError));
+    }
+
     /**
      * bean validation 예외 핸들러
      * @param e - MethodArgumentNotValidException.class
      * @return ApiResponse<ApiError>
      */
-    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Void>> handle(MethodArgumentNotValidException e){
         List<ErrorDetail> details = e.getBindingResult().getAllErrors().stream().map(err -> {
             if (err instanceof FieldError fieldError) {
