@@ -1,7 +1,8 @@
-package dev.chan.orderpaymentservice.repository.order;
+package dev.chan.orderpaymentservice.repository.order.adapter;
 
-import dev.chan.orderpaymentservice.domain.order.OrderProduct;
-import dev.chan.orderpaymentservice.domain.order.OrderProductRepository;
+import dev.chan.orderpaymentservice.domain.order.entity.OrderProduct;
+import dev.chan.orderpaymentservice.domain.order.port.OrderProductRepository;
+import dev.chan.orderpaymentservice.repository.order.JpaOrderProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -27,11 +28,6 @@ public class JpaOrderProductRepositoryAdapter implements OrderProductRepository 
     @Override
     public List<OrderProduct> findAllByOrderId(Long orderId) {
         return orderProductRepository.findAllByOrderId(orderId);
-    }
-
-    @Override
-    public List<OrderProduct> findAll() {
-        return orderProductRepository.findAll();
     }
 
     @Override

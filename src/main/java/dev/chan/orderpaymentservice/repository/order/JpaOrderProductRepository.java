@@ -1,6 +1,6 @@
 package dev.chan.orderpaymentservice.repository.order;
 
-import dev.chan.orderpaymentservice.domain.order.OrderProduct;
+import dev.chan.orderpaymentservice.domain.order.entity.OrderProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,4 +10,5 @@ public interface JpaOrderProductRepository extends JpaRepository<OrderProduct, L
 
     @Query("select op from OrderProduct op where op.order.id = :orderId")
     List<OrderProduct> findAllByOrderId(Long orderId);
+
 }

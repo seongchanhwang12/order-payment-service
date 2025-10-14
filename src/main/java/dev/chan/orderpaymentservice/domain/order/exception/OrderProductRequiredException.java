@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.domain.order;
+package dev.chan.orderpaymentservice.domain.order.exception;
 
 import dev.chan.orderpaymentservice.common.PolicyViolationException;
 
