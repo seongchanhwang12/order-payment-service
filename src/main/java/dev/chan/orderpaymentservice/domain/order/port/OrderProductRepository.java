@@ -1,4 +1,6 @@
-package dev.chan.orderpaymentservice.domain.order;
+package dev.chan.orderpaymentservice.domain.order.port;
+
+import dev.chan.orderpaymentservice.domain.order.entity.OrderProduct;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +11,6 @@ public interface OrderProductRepository {
     Optional<OrderProduct> findById(Long id);
 
     List<OrderProduct> findAllByOrderId(Long aLong);
-
-    List<OrderProduct> findAll();
 
     long count();
 }

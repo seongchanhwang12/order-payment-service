@@ -1,7 +1,8 @@
-package dev.chan.orderpaymentservice.repository.order;
+package dev.chan.orderpaymentservice.repository.order.adapter;
 
-import dev.chan.orderpaymentservice.domain.order.Order;
-import dev.chan.orderpaymentservice.domain.order.OrderRepository;
+import dev.chan.orderpaymentservice.domain.order.entity.Order;
+import dev.chan.orderpaymentservice.domain.order.port.OrderRepository;
+import dev.chan.orderpaymentservice.repository.order.JpaOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -33,5 +34,6 @@ public class JpaOrderRepositoryAdapter implements OrderRepository {
     public long count() {
         return orderRepository.count();
     }
+
 
 }

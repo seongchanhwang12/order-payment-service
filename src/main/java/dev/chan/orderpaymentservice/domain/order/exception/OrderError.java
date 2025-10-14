@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.domain.order;
+package dev.chan.orderpaymentservice.domain.order.exception;
 
 import dev.chan.orderpaymentservice.common.ErrorCode;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Accessors(fluent = true)
 @RequiredArgsConstructor
 public enum OrderError implements ErrorCode {
-    NOT_FOUND(HttpStatus.NOT_FOUND, "ORD-NOT_FOUND","order.error.notfound"),
+    NOT_FOUND(HttpStatus.NOT_FOUND, "ORD-NOT_FOUND","order.error.not_found"),
     ORDER_PRODUCT_REQUIRED(HttpStatus.BAD_REQUEST,"ORD-ORDER_PRODUCT_REQUIRED" , "order.error.order_product_required" ),
     ;
 

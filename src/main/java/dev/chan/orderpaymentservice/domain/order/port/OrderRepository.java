@@ -1,4 +1,6 @@
-package dev.chan.orderpaymentservice.domain.order;
+package dev.chan.orderpaymentservice.domain.order.port;
+
+import dev.chan.orderpaymentservice.domain.order.entity.Order;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,4 +13,5 @@ public interface OrderRepository {
     List<Order> findAll();
 
     long count();
+
 }

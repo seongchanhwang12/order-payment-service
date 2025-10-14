@@ -6,11 +6,11 @@ import dev.chan.orderpaymentservice.application.order.dto.PlaceOrderCommand;
 import dev.chan.orderpaymentservice.application.product.ProductNotFoundException;
 import dev.chan.orderpaymentservice.domain.common.Quantity;
 
-import dev.chan.orderpaymentservice.domain.order.Order;
-import dev.chan.orderpaymentservice.domain.order.OrderProduct;
+import dev.chan.orderpaymentservice.domain.order.entity.Order;
+import dev.chan.orderpaymentservice.domain.order.entity.OrderProduct;
 import dev.chan.orderpaymentservice.domain.product.Product;
-import dev.chan.orderpaymentservice.domain.order.OrderProductRepository;
-import dev.chan.orderpaymentservice.domain.order.OrderRepository;
+import dev.chan.orderpaymentservice.domain.order.port.OrderProductRepository;
+import dev.chan.orderpaymentservice.domain.order.port.OrderRepository;
 import dev.chan.orderpaymentservice.domain.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

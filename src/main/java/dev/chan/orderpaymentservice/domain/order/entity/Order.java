@@ -1,7 +1,8 @@
-package dev.chan.orderpaymentservice.domain.order;
+package dev.chan.orderpaymentservice.domain.order.entity;
 
 import dev.chan.orderpaymentservice.common.Ensure;
 import dev.chan.orderpaymentservice.domain.common.Money;
+import dev.chan.orderpaymentservice.domain.order.exception.OrderProductRequiredException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,8 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "ORDERS")
 public class Order {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private Long orderedBy;
+    private Long id;
+    private long orderedBy;
 
     @CurrentTimestamp
     private LocalDateTime orderedAt;
@@ -30,6 +31,7 @@ public class Order {
 
     @Transient
     private final List<OrderProduct> orderProducts = new ArrayList<>();
+
 
     public static Order create(Long memberId) {
         Order order = new Order();

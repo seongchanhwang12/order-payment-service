@@ -1,4 +1,4 @@
-package dev.chan.orderpaymentservice.domain.order;
+package dev.chan.orderpaymentservice.domain.order.entity;
 
 import dev.chan.orderpaymentservice.common.Ensure;
 import dev.chan.orderpaymentservice.domain.common.Money;
