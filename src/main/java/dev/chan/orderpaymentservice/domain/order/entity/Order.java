@@ -2,6 +2,7 @@ package dev.chan.orderpaymentservice.domain.order.entity;
 
 import dev.chan.orderpaymentservice.common.Ensure;
 import dev.chan.orderpaymentservice.domain.common.Money;
+import dev.chan.orderpaymentservice.domain.order.OrderStatus;
 import dev.chan.orderpaymentservice.domain.order.exception.OrderProductRequiredException;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Order {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private long orderedBy;
+    private OrderStatus orderStatus;
 
     @CurrentTimestamp
     private LocalDateTime orderedAt;
