@@ -6,9 +6,9 @@ import dev.chan.orderpaymentservice.application.order.dto.OrderDetail;
 import dev.chan.orderpaymentservice.application.order.dto.OrderResult;
 import dev.chan.orderpaymentservice.application.order.dto.PlaceOrderCommand;
 import dev.chan.orderpaymentservice.common.ApiResponse;
-import dev.chan.orderpaymentservice.repository.order.JpaOrderProductQueryRepository;
 import dev.chan.orderpaymentservice.web.dto.PlaceOrderRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +45,7 @@ public class OrderController {
      * @return
      */
     @GetMapping("/{orderId}")
-    public ResponseEntity<ApiResponse<OrderDetail>> findAll(@PathVariable long orderId) {
+    public ResponseEntity<ApiResponse<OrderDetail>> findAll(@PathVariable Long orderId) {
         OrderDetail handle = getOrderUseCase.handle(orderId);
         return ResponseEntity.ok(ApiResponse.success(handle));
     }
